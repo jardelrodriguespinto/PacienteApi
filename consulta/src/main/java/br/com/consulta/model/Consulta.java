@@ -21,8 +21,8 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-@Table(name = "admissoes")
-public class Admissao {
+@Table(name = "consultas")
+public class Consulta {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	Long id;

@@ -1,5 +1,5 @@
 package br.com.consulta.controller;
 
-public class AdmissaoController {
+public class ConsultaController {
 
 }

@@ -50,6 +50,21 @@ public class PacienteController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 	}
+
+	@GetMapping("/{nome}/{sobrenome}")
+	public ResponseEntity<Paciente> getPacientePorNomeCompleto(@PathVariable("nome") String nome, @PathVariable("sobrenome") String sobrenome) {
+		try {
+			Paciente paciente = pacienteService.getPacientePorNomeCompleto(nome, sobrenome);
+			
+			if (paciente == null)
+				return new ResponseEntity<Paciente>(paciente, HttpStatus.NOT_FOUND);
+			
+			return new ResponseEntity<Paciente>(paciente, HttpStatus.OK);
+		}
+		catch(Exception exc) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+		}
+	}
 	
 	@PostMapping("/adicionar")
 	public ResponseEntity<?> addNovoPaciente(@RequestBody Paciente novoPaciente) {

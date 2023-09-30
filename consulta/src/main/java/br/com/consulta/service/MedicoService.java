@@ -19,17 +19,15 @@ private MedicoRepository medicoRepository;
 		this.medicoRepository = medicoRepository;
 	}
 	
-	
 	public List<Medico> getTodosMedicos() {
 		return medicoRepository.findAll();
 	}
 	
-	public Medico getMedicoExisteById(Long id) {
+	public Medico getMedicoById(Long id) {
 		
 		Optional<Medico> medico = medicoRepository.findById(id);
 		
 		return medico.orElse(null);
-		
 	}
 	
 	public Medico addNovoMedico(Medico novoMedico) {
@@ -46,19 +44,29 @@ private MedicoRepository medicoRepository;
 	
 	public Medico modificarMedico(Medico modificarMedico, Long id) {
 		
-		Optional<Medico> medico = medicoRepository.findById(id);
+		Medico medico = medicoRepository.findById(id).orElse(null);
 		
-		if (medico.isPresent()) 
-			return medico.orElse(null);
+		if (medico != null) {
+			medico.setNome(modificarMedico.getNome());
+			medico.setSobrenome(modificarMedico.getSobrenome());
+			medico.setEspecializacao(modificarMedico.getEspecializacao());
+		}
 		
-		return null;
+		medicoRepository.save(medico);
+		
+		return medico;
 	}
 	
-	public void deletarMedico(Long id) {
+	
+	public String deletarMedico(Long id) {
 		
 		Medico medico = medicoRepository.findById(id).orElse(null);
 		
-		if (medico != null)
+		if (medico != null) {
 			medicoRepository.deleteById(id);
+			return "Médico deletado com sucesso !";
+		}
+
+		return "Médico não encontrado !";
 	}
 }

@@ -19,7 +19,6 @@ public class PacienteService {
 		this.pacienteRepository = pacienteRepository;
 	}
 	
-	
 	public List<Paciente> getTodosPacientes() {
 		return pacienteRepository.findAll();
 	}
@@ -29,6 +28,16 @@ public class PacienteService {
 		Optional<Paciente> paciente = pacienteRepository.findById(id);
 		
 		return paciente.orElse(null);
+	}
+
+	public Paciente getPacientePorNomeCompleto(String nome, String sobrenome) {
+		
+		Paciente paciente = pacienteRepository.getPacientePorNomeCompleto(nome, sobrenome);
+		
+		if (paciente != null)
+			return paciente;
+		
+		return null;
 	}
 	
 	public Paciente addNovoPaciente(Paciente novoPaciente) {
@@ -59,6 +68,8 @@ public class PacienteService {
 			paciente.setDataUltimaAlta(modificarPaciente.getDataUltimaAlta());
 		}
 		
+		pacienteRepository.save(paciente);
+		
 		return modificarPaciente;
 	}
 	
@@ -70,7 +81,7 @@ public class PacienteService {
 			pacienteRepository.deleteById(id);
 			return "Paciente deletado com sucesso !";
 		}
+
 		return "Paciente não encontrado !";
-		
 	}
 }
